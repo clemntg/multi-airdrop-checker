@@ -171,8 +171,20 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
-                    name: "Manta",
+                    name: "Manta (evm.txt, polkadot.txt)",
                     value: "manta",
+                },
+                {
+                    name: "Dymension (dymension.txt)",
+                    value: "dymension",
+                },
+                {
+                    name: "Frame (private_keys.txt)",
+                    value: "frame",
+                },
+                {
+                    name: "Anoma (anoma.txt)",
+                    value: "anoma",
                 },
             ],
             default: "manta",
@@ -228,4 +240,12 @@ export function getProxy(index, isRandom = false) {
 export function sortObjectByKey(obj) {
     const sortedEntries = Object.entries(obj).sort((a, b) => a[0].localeCompare(b[0]))
     return Object.fromEntries(sortedEntries)
+}
+
+export function privateKeyConvert(privateKey) {
+    if (privateKey.startsWith('0x')) {
+        return privateKey
+    } else {
+        return `0x${privateKey}`
+    }
 }
