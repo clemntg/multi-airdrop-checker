@@ -2,6 +2,7 @@ import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
+import { memeAirdropChecker } from "./checkers/meme.js"
 import { entryPoint } from "./utils/common.js"
 
 async function startMenu(menu) {
@@ -24,6 +25,9 @@ async function startMenu(menu) {
             break
         case "anoma":
             anomaAirdropChecker()
+            break
+        case "meme":
+            memeAirdropChecker()
             break
     }
 }

@@ -186,6 +186,10 @@ export const entryPoint = async () => {
                     name: "Anoma (anoma.txt)",
                     value: "anoma",
                 },
+                {
+                    name: "Meme (private_keys.txt)",
+                    value: "meme",
+                },
             ],
             default: "manta",
             loop: false,
