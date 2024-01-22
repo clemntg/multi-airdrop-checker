@@ -3,6 +3,7 @@ import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
+import { zetachainAirdropChecker } from "./checkers/zetachain.js"
 import { entryPoint } from "./utils/common.js"
 
 async function startMenu(menu) {
@@ -14,6 +15,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "zetachain":
+            zetachainAirdropChecker()
+            break
         case "manta":
             mantaAirdropChecker()
             break
