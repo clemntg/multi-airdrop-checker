@@ -171,8 +171,8 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
-                    name: "Manta (evm.txt, polkadot.txt)",
-                    value: "manta",
+                    name: "Zetachain (zetachain.txt)",
+                    value: "zetachain",
                 },
                 {
                     name: "Dymension (dymension.txt)",
