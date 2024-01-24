@@ -9,6 +9,8 @@
 
 ### Чекер
 
+* Altlayer
+* Rabby points
 * Zetachain
 * Frame
 * Anoma
