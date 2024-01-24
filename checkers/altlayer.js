@@ -33,12 +33,10 @@ let stats = []
 let csvData = []
 let totalAirdrop = 0
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
+const regex = /"amount":"(\d+)"/
 
 async function checkAirdrop(wallet, proxy = null) {
-    console.log('test')
     let config = {
-        url: "https://94c87e96-000a-4740-bc01-0ca9abbb7bca-stg-airdrop.alt.technology/",
-        method: 'POST',
         timeout: 5000,
         "headers": {
             "accept": "text/x-component",
@@ -56,7 +54,6 @@ async function checkAirdrop(wallet, proxy = null) {
             "Referer": "https://94c87e96-000a-4740-bc01-0ca9abbb7bca-stg-airdrop.alt.technology/",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
-        formData: "[\"\"]"
     }
 
     if (proxy) {
@@ -73,15 +70,20 @@ async function checkAirdrop(wallet, proxy = null) {
     let retries = 0
 
     stats[wallet].airdrop = 0
+    while (!isFetched) {
+        await axios.post('https://94c87e96-000a-4740-bc01-0ca9abbb7bca-stg-airdrop.alt.technology/', [wallet], config).then(async response => {
+            const match = response.data.match(regex)
+            let amount = 0
 
-    // while (!isFetched) {
-        cloudscraper(config).then(async response => {
-            console.log(response)
-            stats[wallet].airdrop = response.data.amount
+            if (match) {
+                amount = match[1]
+            }
+
+            stats[wallet].airdrop = BigInt(amount) / BigInt(1e18)
             totalAirdrop += stats[wallet].airdrop > 0 ? parseFloat(stats[wallet].airdrop) : 0
             isFetched = true
         }).catch(e => {
-            if (debug) console.log('balances', e)
+            if (debug) console.log('balances', e.toString())
 
             retries++
 
@@ -89,7 +91,7 @@ async function checkAirdrop(wallet, proxy = null) {
                 isFetched = true
             }
         })
-    // }
+    }
 }
 
 async function fetchWallet(wallet, index) {
