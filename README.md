@@ -9,7 +9,7 @@
 
 ### Чекер
 
-* Manta
+* Zetachain
 * Frame
 * Anoma
 * Dymension
