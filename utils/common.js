@@ -171,6 +171,14 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Altlayer (altlayer.txt)",
+                    value: "altlayer",
+                },
+                {
+                    name: "Rabby (rabby.txt)",
+                    value: "rabby",
+                },
+                {
                     name: "Zetachain (zetachain.txt)",
                     value: "zetachain",
                 },

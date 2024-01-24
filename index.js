@@ -1,8 +1,10 @@
+import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
+import { rabbypointsChecker } from "./checkers/rabby.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
 import { entryPoint } from "./utils/common.js"
 
@@ -15,6 +17,12 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "altlayer":
+            altlayerAirdropChecker()
+            break
+        case "rabby":
+            rabbypointsChecker()
+            break
         case "zetachain":
             zetachainAirdropChecker()
             break
