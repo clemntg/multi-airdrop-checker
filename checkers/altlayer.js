@@ -42,7 +42,7 @@ async function checkAirdrop(wallet, proxy = null) {
             "accept": "text/x-component",
             "accept-language": "en-US,en;q=0.9,ru;q=0.8,bg;q=0.7",
             "content-type": "text/plain;charset=UTF-8",
-            "next-action": "67fc7bba70928774c5305f604afe585929202b77",
+            "next-action": "6817e8f24aae7e8aed1d5226e9b368ab8c1ded5d",
             "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22(homePage)%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%5D%7D%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
             "sec-ch-ua": "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Google Chrome\";v=\"120\"",
             "sec-ch-ua-mobile": "?0",
@@ -50,8 +50,7 @@ async function checkAirdrop(wallet, proxy = null) {
             "sec-fetch-dest": "empty",
             "sec-fetch-mode": "cors",
             "sec-fetch-site": "same-origin",
-            "cookie": "_ga=GA1.1.227546664.1706125112; _ga_CJQQB4WKM9=GS1.1.1706125112.1.1.1706127430.0.0.0",
-            "Referer": "https://94c87e96-000a-4740-bc01-0ca9abbb7bca-stg-airdrop.alt.technology/",
+            "Referer": "https://airdrop.altlayer.io/",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
     }
@@ -71,7 +70,7 @@ async function checkAirdrop(wallet, proxy = null) {
 
     stats[wallet].airdrop = 0
     while (!isFetched) {
-        await axios.post('https://94c87e96-000a-4740-bc01-0ca9abbb7bca-stg-airdrop.alt.technology/', [wallet], config).then(async response => {
+        await axios.post('https://airdrop.altlayer.io/', [wallet], config).then(async response => {
             const match = response.data.match(regex)
             let amount = 0
 
