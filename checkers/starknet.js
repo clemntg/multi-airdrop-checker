@@ -50,6 +50,10 @@ function findByIdentity(identity) {
 
 
 async function fetchWallet(wallet, index) {
+    if (!wallet.startsWith('0x0')) {
+        wallet = wallet.replace('0x', '0x0')
+    }
+
     const data = findByIdentity(wallet)
     stats[wallet] = {
         airdrop: data ? data.amount : 0
