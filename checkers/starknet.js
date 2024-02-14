@@ -42,8 +42,10 @@ for (let i = 0; i < 7; i++) {
     combinedData = combinedData.concat(jsonData.eligibles)
 }
 
+console.log(combinedData.length)
+
 function findByIdentity(identity) {
-    return combinedData.find(el => el.identity === identity)
+    return combinedData.find(el => el.identity === identity.toLowerCase())
 }
 
 
