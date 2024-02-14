@@ -42,16 +42,22 @@ for (let i = 0; i < 7; i++) {
     combinedData = combinedData.concat(jsonData.eligibles)
 }
 
-console.log(combinedData.length)
+for (let i = 0; i < 6; i++) {
+    const fileContent = fs.readFileSync(`./starknet/eth/eth-${i}.json`, 'utf8')
+    const jsonData = JSON.parse(fileContent)
+    combinedData = combinedData.concat(jsonData.eligibles)
+}
+
 
 function findByIdentity(identity) {
     return combinedData.find(el => el.identity === identity.toLowerCase())
 }
 
-
 async function fetchWallet(wallet, index) {
-    if (!wallet.startsWith('0x0')) {
-        wallet = wallet.replace('0x', '0x0')
+    if (wallet.length > 42) {
+        if (!wallet.startsWith('0x0')) {
+            wallet = wallet.replace('0x', '0x0')
+        }
     }
 
     const data = findByIdentity(wallet)
