@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Starknet (starknet.txt)",
+                    value: "starknet",
+                },
+                {
                     name: "Altlayer (altlayer.txt)",
                     value: "altlayer",
                 },

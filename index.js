@@ -5,6 +5,7 @@ import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
 import { rabbypointsChecker } from "./checkers/rabby.js"
+import { starknetAirdropChecker } from "./checkers/starknet.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
 import { entryPoint } from "./utils/common.js"
 
@@ -17,6 +18,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "starknet":
+            starknetAirdropChecker()
+            break
         case "altlayer":
             altlayerAirdropChecker()
             break
