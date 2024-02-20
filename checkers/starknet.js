@@ -42,7 +42,7 @@ for (let i = 0; i < 10; i++) {
     combinedData = combinedData.concat(jsonData.eligibles)
 }
 
-for (let i = 0; i < 7; i++) {
+for (let i = 0; i < 6; i++) {
     const fileContent = fs.readFileSync(`./data/starknet/eth/eth-${i}.json`, 'utf8')
     const jsonData = JSON.parse(fileContent)
     combinedData = combinedData.concat(jsonData.eligibles)
