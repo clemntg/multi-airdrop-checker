@@ -36,14 +36,14 @@ const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_cla
 
 let combinedData = []
 
-for (let i = 0; i < 7; i++) {
-    const fileContent = fs.readFileSync(`./starknet/starknet-${i}.json`, 'utf8')
+for (let i = 0; i < 10; i++) {
+    const fileContent = fs.readFileSync(`./data/starknet/starknet-${i}.json`, 'utf8')
     const jsonData = JSON.parse(fileContent)
     combinedData = combinedData.concat(jsonData.eligibles)
 }
 
-for (let i = 0; i < 6; i++) {
-    const fileContent = fs.readFileSync(`./starknet/eth/eth-${i}.json`, 'utf8')
+for (let i = 0; i < 7; i++) {
+    const fileContent = fs.readFileSync(`./data/starknet/eth/eth-${i}.json`, 'utf8')
     const jsonData = JSON.parse(fileContent)
     combinedData = combinedData.concat(jsonData.eligibles)
 }

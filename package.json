@@ -18,6 +18,7 @@
     "https-proxy-agent": "^7.0.2",
     "inquirer": "^9.2.11",
     "moment": "^2.29.4",
+    "papaparse": "^5.4.1",
     "socks-proxy-agent": "^8.0.2",
     "viem": "^1.19.11"
   },

@@ -4,6 +4,7 @@ import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
+import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { rabbypointsChecker } from "./checkers/rabby.js"
 import { starknetAirdropChecker } from "./checkers/starknet.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
@@ -18,6 +19,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "optimism":
+            optimismAirdropChecker()
+            break
         case "starknet":
             starknetAirdropChecker()
             break

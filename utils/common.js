@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Optimism (optimism.txt)",
+                    value: "optimism",
+                },
+                {
                     name: "Starknet (starknet.txt)",
                     value: "starknet",
                 },
