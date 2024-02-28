@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "QNA3 (private_keys.txt)",
+                    value: "qna",
+                },
+                {
                     name: "Optimism (optimism.txt)",
                     value: "optimism",
                 },
