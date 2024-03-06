@@ -183,10 +183,6 @@ export const entryPoint = async () => {
                     value: "optimism",
                 },
                 {
-                    name: "Starknet (starknet.txt)",
-                    value: "starknet",
-                },
-                {
                     name: "Altlayer (altlayer.txt)",
                     value: "altlayer",
                 },
