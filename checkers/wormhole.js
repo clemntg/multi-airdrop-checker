@@ -21,7 +21,7 @@ let headers = [
     { id: 'airdrop', title: 'airdrop'},
 ]
 
-let debug = true
+let debug = false
 let p
 let csvWriter
 let wallets = readWallets('./addresses/wormhole.txt')
