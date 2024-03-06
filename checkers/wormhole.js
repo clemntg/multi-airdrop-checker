@@ -54,7 +54,7 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     let type = '1'
-    let formattedWallet
+    let formattedWallet = wallet
 
     if (wallet.includes('0x')) {
         formattedWallet = wallet.toLowerCase()
