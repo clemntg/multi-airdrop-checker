@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Wormhole (wormhole.txt)",
+                    value: "wormhole",
+                },
+                {
                     name: "QNA3 (private_keys.txt)",
                     value: "qna",
                 },

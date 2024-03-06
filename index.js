@@ -8,6 +8,7 @@ import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { qnaAirdropChecker } from "./checkers/qna3.js"
 import { rabbypointsChecker } from "./checkers/rabby.js"
 import { starknetAirdropChecker } from "./checkers/starknet.js"
+import { wormholeAirdropChecker } from "./checkers/wormhole.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
 import { entryPoint } from "./utils/common.js"
 
@@ -20,6 +21,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "wormhole":
+            wormholeAirdropChecker()
+            break
         case "qna":
             qnaAirdropChecker()
             break
