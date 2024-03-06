@@ -66,10 +66,9 @@ async function checkAirdrop(wallet, proxy = null) {
     if (wallet.includes('osmo')) {
         type = '20'
     }
-    console.log(type)
+
     while (!isFetched) {
         await axios.get(`https://prod-flat-files-min.wormhole.com/${wallet}_${type}.json`, config).then(async response => {
-            console.log(response.data)
             stats[wallet].airdrop = response.data.amount / 1e9
             totalAirdrop += parseFloat(stats[wallet].airdrop)
             isFetched = true
