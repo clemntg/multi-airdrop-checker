@@ -70,6 +70,7 @@ async function checkAirdrop(wallet, proxy = null) {
     while (!isFetched) {
         await axios.get(`https://prod-flat-files-min.wormhole.com/${wallet}_${type}.json`, config).then(async response => {
             stats[wallet].airdrop = response.data.amount / 1e9
+            stats[wallet].airdrop = parseInt(stats[wallet].airdrop)
             totalAirdrop += parseFloat(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
