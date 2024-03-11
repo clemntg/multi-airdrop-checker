@@ -16,13 +16,13 @@ import { mainnet } from "viem/chains"
 let columns = [
     { name: 'n', color: 'green', alignment: "right"},
     { name: 'wallet', color: 'green', alignment: "right"},
-    { name: 'points', color: 'green', alignment: "right"},
+    { name: 'airdrop', color: 'green', alignment: "right"},
 ]
 
 let headers = [
     { id: 'n', title: '№'},
     { id: 'wallet', title: 'wallet'},
-    { id: 'points', title: 'points'},
+    { id: 'airdrop', title: 'airdrop'},
 ]
 
 let requestHeaders = {
@@ -98,9 +98,9 @@ async function getPoints(wallet, proxy = null, walletClient) {
         })
 
         config.headers.authorization = `Bearer ${token}`
-        await axios.get(`https://memefarm-api.memecoin.org/user/tasks`, config).then(async response => {
+        await axios.get(`https://memefarm-api.memecoin.org/user/results/final`, config).then(async response => {
             // console.log(response.data)
-            stats[walletAddress].points = response.data.points.current
+            stats[walletAddress].points = parseInt(response.data.results[0].meme)
             totalPoints += stats[walletAddress].points
             isFetched = true
         }).catch(e => {
@@ -139,7 +139,7 @@ async function fetchWallet(wallet, index) {
     let row = {
         n: parseInt(index)+1,
         wallet: walletAddress,
-        points: stats[walletAddress].points,
+        airdrop: stats[walletAddress].points,
     }
 
     p.addRow(row, { color: "cyan" })
@@ -208,7 +208,7 @@ async function addTotalRow() {
 
     let row = {
         wallet: 'Total',
-        points: totalPoints
+        airdrop: totalPoints
     }
 
     p.addRow(row, { color: "cyan" })

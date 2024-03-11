@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Meme (private_keys.txt)",
+                    value: "meme",
+                },
+                {
                     name: "Wormhole (wormhole.txt)",
                     value: "wormhole",
                 },
