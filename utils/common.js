@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Ether.fi (etherfi.txt)",
+                    value: "etherfi",
+                },
+                {
                     name: "Meme (private_keys.txt)",
                     value: "meme",
                 },
@@ -179,43 +183,11 @@ export const entryPoint = async () => {
                     value: "wormhole",
                 },
                 {
-                    name: "QNA3 (private_keys.txt)",
-                    value: "qna",
-                },
-                {
                     name: "Optimism (optimism.txt)",
                     value: "optimism",
-                },
-                {
-                    name: "Altlayer (altlayer.txt)",
-                    value: "altlayer",
-                },
-                {
-                    name: "Rabby (rabby.txt)",
-                    value: "rabby",
-                },
-                {
-                    name: "Zetachain (zetachain.txt)",
-                    value: "zetachain",
-                },
-                {
-                    name: "Dymension (dymension.txt)",
-                    value: "dymension",
-                },
-                {
-                    name: "Frame (private_keys.txt)",
-                    value: "frame",
-                },
-                {
-                    name: "Anoma (anoma.txt)",
-                    value: "anoma",
-                },
-                {
-                    name: "Meme (private_keys.txt)",
-                    value: "meme",
-                },
+                }
             ],
-            default: "manta",
+            default: "etherfi",
             loop: false,
         },
     ]

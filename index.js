@@ -1,6 +1,7 @@
 import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
+import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
@@ -20,6 +21,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "etherfi":
+            etherfiAirdropChecker()
+            break
         case "wormhole":
             wormholeAirdropChecker()
             break
