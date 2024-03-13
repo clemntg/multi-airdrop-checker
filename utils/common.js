@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Aevo (aevo.txt)",
+                    value: "aevo",
+                },
+                {
                     name: "Ether.fi (etherfi.txt)",
                     value: "etherfi",
                 },
@@ -187,7 +191,7 @@ export const entryPoint = async () => {
                     value: "optimism",
                 }
             ],
-            default: "etherfi",
+            default: "aevo",
             loop: false,
         },
     ]

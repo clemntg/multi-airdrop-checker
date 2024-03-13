@@ -1,3 +1,4 @@
+import { aevoAirdropChecker } from "./checkers/aevo.js"
 import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
@@ -21,6 +22,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "aevo":
+            aevoAirdropChecker()
+            break
         case "etherfi":
             etherfiAirdropChecker()
             break
