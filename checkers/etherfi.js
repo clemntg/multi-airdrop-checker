@@ -54,8 +54,8 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://journey.ether.fi/api/wallet/${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = parseFloat(response.data.allocation.allocation, 0) / 1e18
+        await axios.get(`https://claim.ether.fi/api/wallet/${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = parseFloat(response.data.allocationData.allocations[0], 0)
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
