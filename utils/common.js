@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Polyhedra (polyhedra.txt)",
+                    value: "polyhedra",
+                },
+                {
                     name: "Aevo (aevo.txt)",
                     value: "aevo",
                 },
@@ -191,7 +195,6 @@ export const entryPoint = async () => {
                     value: "optimism",
                 }
             ],
-            default: "aevo",
             loop: false,
         },
     ]
