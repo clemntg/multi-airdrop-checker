@@ -56,7 +56,7 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://pub-88646eee386a4ddb840cfb05e7a8d8a5.r2.dev/eth_data/${addrPrefix}.json`, config).then(async response => {
-            stats[wallet].airdrop = parseInt(response.data[wallet].amount, 16) / 1e18
+            stats[wallet].airdrop += parseInt(response.data[wallet].amount, 16) / 1e18
             totalAirdrop += stats[wallet].airdrop
             isFetched = true
         }).catch(e => {
@@ -70,7 +70,7 @@ async function checkAirdrop(wallet, proxy = null) {
         })
 
         await axios.get(`https://pub-88646eee386a4ddb840cfb05e7a8d8a5.r2.dev/bsc_data/${addrPrefix}.json`, config).then(async response => {
-            stats[wallet].airdrop = parseInt(response.data[wallet].amount, 16) / 1e18
+            stats[wallet].airdrop += parseInt(response.data[wallet].amount, 16) / 1e18
             totalAirdrop += stats[wallet].airdrop
             isFetched = true
         }).catch(e => {
