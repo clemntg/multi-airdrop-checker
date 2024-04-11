@@ -171,6 +171,14 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Metamask (evm.txt)",
+                    value: "metamask",
+                },
+                {
+                    name: "LineaPark (evm.txt)",
+                    value: "linea-park",
+                },
+                {
                     name: "Polyhedra (polyhedra.txt)",
                     value: "polyhedra",
                 },

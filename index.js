@@ -4,8 +4,10 @@ import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
+import { lineaParkAirdropChecker } from "./checkers/linea-park.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
+import { metamaskAirdropChecker } from "./checkers/metamask.js"
 import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { polyhedraAirdropChecker } from "./checkers/polyhedra.js"
 import { qnaAirdropChecker } from "./checkers/qna3.js"
@@ -23,6 +25,12 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "metamask":
+            metamaskAirdropChecker()
+            break
+        case "linea-park":
+            lineaParkAirdropChecker()
+            break
         case "polyhedra":
             polyhedraAirdropChecker()
             break
