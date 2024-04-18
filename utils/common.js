@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Avail (private_keys.txt)",
+                    value: "avail",
+                },
+                {
                     name: "Metamask (evm.txt)",
                     value: "metamask",
                 },

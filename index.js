@@ -1,6 +1,7 @@
 import { aevoAirdropChecker } from "./checkers/aevo.js"
 import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
+import { availAirdropChecker } from "./checkers/avail.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
@@ -25,6 +26,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "avail":
+            availAirdropChecker()
+            break
         case "metamask":
             metamaskAirdropChecker()
             break
