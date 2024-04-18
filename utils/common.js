@@ -175,6 +175,10 @@ export const entryPoint = async () => {
                     value: "avail",
                 },
                 {
+                    name: "Avail starknet (starknet_keys.txt, starknet_addresses.txt)",
+                    value: "avail_starknet",
+                },
+                {
                     name: "Metamask (evm.txt)",
                     value: "metamask",
                 },

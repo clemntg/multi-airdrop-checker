@@ -9,9 +9,8 @@ import { createObjectCsvWriter } from 'csv-writer'
 import cliProgress from 'cli-progress'
 import { HttpsProxyAgent } from "https-proxy-agent"
 import { SocksProxyAgent } from "socks-proxy-agent"
-import { createWalletClient, createPublicClient, http } from "viem"
 import { privateKeyToAccount } from "viem/accounts"
-import { mainnet } from "viem/chains"
+import * as starknet from "starknet"
 
 let columns = [
     { name: 'n', color: 'green', alignment: "right" },
@@ -28,7 +27,8 @@ let headers = [
 let debug = false
 let p
 let csvWriter
-let wallets = readWallets('./addresses/private_keys.txt')
+let wallets = readWallets('./addresses/starknet_keys.txt')
+let addresses = readWallets('./addresses/starknet_addresses.txt')
 let proxies = readWallets('./proxies.txt')
 let iterations = wallets.length
 let iteration = 1
@@ -36,9 +36,74 @@ let stats = []
 let csvData = []
 let totalAirdrop = 0
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
+const provider = new starknet.RpcProvider({ nodeUrl: 'https://starknet.blockpi.network/v1/rpc/public' })
 
-async function checkAirdrop(wallet, proxy = null, walletClient) {
-    const walletAddress = walletClient.account.address.toLowerCase()
+function getMessage(timestamp) {
+    return {
+        types: {
+            StarkNetDomain: [
+                {
+                    name: 'name',
+                    type: 'felt',
+                },
+                {
+                    name: 'version',
+                    type: 'felt',
+                },
+                {
+                    name: 'chainId',
+                    type: 'felt',
+                },
+            ],
+            contents: [
+                {
+                    name: 'Greetings',
+                    type: 'string',
+                },
+                {
+                    name: 'Sign',
+                    type: 'felt',
+                },
+                {
+                    name: 'timestamp',
+                    type: 'felt',
+                },
+            ],
+            Message: [
+                {
+                    name: 'contents',
+                    type: 'contents',
+                },
+            ],
+        },
+        primaryType: 'Message',
+        domain: {
+            name: 'Avail Rewards',
+            version: '1',
+            chainId: '0x534e5f4d41494e',
+        },
+        message: {
+            contents: {
+                Greetings: 'Greetings from Avail!',
+                Sign: 'Sign to Check your Eligibility',
+                timestamp: String(timestamp),
+            },
+        },
+    }
+}
+
+async function getSignature(account, message) {
+    const signed = await account.signMessage(message)
+    return [String(signed.r), String(signed.s)]
+}
+
+async function checkAirdropStarknet(address, privatekey, proxy = null) {
+
+    const account = new starknet.Account(provider, address, privatekey)
+    const currentTimestamp = String(Math.floor(new Date().getTime() / 1000))
+    const message = getMessage(currentTimestamp)
+    const signature = await getSignature(account, message)
+
     let config = {
         timeout: 100000
     }
@@ -52,19 +117,12 @@ async function checkAirdrop(wallet, proxy = null, walletClient) {
         }
     }
 
-    const currentTimestamp = Math.floor(Date.now() / 1000)
-
-    const signature = await walletClient.signMessage({
-        account: privateKeyToAccount(privateKeyConvert(wallet)),
-        message: `Greetings from Avail!\n\nSign this message to check your eligibility. This signature will not cost you any fees.\n\nTimestamp: ${currentTimestamp}`,
-    })
-
     let isFetched = false
     let retries = 0
     while (!isFetched) {
         await axios.post(`https://claim-api.availproject.org/check-rewards`, {
-            account: walletAddress,
-            type: 'ETHEREUM',
+            account: address,
+            type: 'ARGENTX',
             timestamp: currentTimestamp,
             signedMessage: signature
         }, config).then(async response => {
@@ -83,7 +141,7 @@ async function checkAirdrop(wallet, proxy = null, walletClient) {
     }
 }
 
-async function fetchWallet(wallet, index) {
+async function fetchWallet(privatekey, index) {
 
     let proxy = null
     if (proxies.length) {
@@ -94,20 +152,18 @@ async function fetchWallet(wallet, index) {
         }
     }
 
-    const walletClient = createWalletClient({ chain: mainnet, account: privateKeyToAccount(privateKeyConvert(wallet)), transport: http() })
-    const walletAddress = walletClient.account.address.toLowerCase()
-    stats[walletAddress] = {
+    stats[addresses[index]] = {
         airdrop: 0
     }
 
-    await checkAirdrop(wallet, proxy, walletClient)
+    await checkAirdropStarknet(addresses[index], privatekey, proxy)
 
     progressBar.update(iteration)
 
     let row = {
         n: parseInt(index) + 1,
-        wallet: walletAddress,
-        airdrop: stats[walletAddress].airdrop,
+        wallet: addresses[index],
+        airdrop: stats[addresses[index]].airdrop,
     }
 
     p.addRow(row, { color: "cyan" })
@@ -137,7 +193,7 @@ async function fetchWallets() {
     })
 
     csvWriter = createObjectCsvWriter({
-        path: './results/avail.csv',
+        path: './results/avail_starknet.csv',
         header: headers
     })
 
@@ -182,7 +238,7 @@ async function addTotalRow() {
     p.addRow(row, { color: "cyan" })
 }
 
-export async function availAirdropChecker() {
+export async function availStarknetAirdropChecker() {
     progressBar.start(iterations, 0)
     await fetchWallets()
     await addTotalRow()
