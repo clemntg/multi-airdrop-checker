@@ -126,8 +126,8 @@ async function checkAirdropStarknet(address, privatekey, proxy = null) {
             timestamp: currentTimestamp,
             signedMessage: signature
         }, config).then(async response => {
-            stats[walletAddress].airdrop = response.data.message === 'Not Eligible' ? 0 : response.data.data.reward_amount_avail
-            totalAirdrop += stats[walletAddress].airdrop
+            stats[address].airdrop = response.data.message === 'Not Eligible' ? 0 : response.data.data.reward_amount_avail
+            totalAirdrop += stats[address].airdrop
             isFetched = true
         }).catch(e => {
             if (debug) console.log('airdrop', e)
