@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Wef (evm.txt)",
+                    value: "wef",
+                },
+                {
                     name: "Avail (private_keys.txt)",
                     value: "avail",
                 },
