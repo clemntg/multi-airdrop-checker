@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Eigenlayer (evm.txt)",
+                    value: "eigenlayer",
+                },
+                {
                     name: "Wef (evm.txt)",
                     value: "wef",
                 },

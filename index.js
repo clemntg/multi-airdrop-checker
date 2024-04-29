@@ -4,6 +4,7 @@ import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { availAirdropChecker } from "./checkers/avail.js"
 import { availStarknetAirdropChecker } from "./checkers/avail_starknet.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
+import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { lineaParkAirdropChecker } from "./checkers/linea-park.js"
@@ -28,6 +29,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "eigenlayer":
+            eigenlayerAirdropChecker()
+            break
         case "wef":
             wefAirdropChecker()
             break
