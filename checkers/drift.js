@@ -30,7 +30,8 @@ let iterations = wallets.length
 let iteration = 1
 let stats = []
 let csvData = []
-let totalAirdrop = 0
+let totalAirdrop1 = 0
+let totalAirdrop2 = 0
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
 
 async function checkAirdrop(wallet, proxy = null) {
@@ -55,8 +56,9 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://airdrop.drift.trade/eligibility/${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = parseInt(response.data.end_amount) / 1e6
-            totalAirdrop += parseInt(stats[wallet].airdrop)
+            stats[wallet].airdrop = parseInt(response.data.start_amount) / 1e6 + ' / ' + parseInt(response.data.end_amount) / 1e6
+            totalAirdrop1 += parseInt(response.data.start_amount) / 1e6
+            totalAirdrop2 += parseInt(response.data.end_amount) / 1e6
             isFetched = true
         }).catch(e => {
             if (debug) console.log('balances', e.toString())
@@ -161,7 +163,7 @@ async function addTotalRow() {
 
     let row = {
         wallet: 'Total',
-        airdrop: totalAirdrop
+        airdrop: totalAirdrop1 + ' / ' + totalAirdrop2
     }
 
     p.addRow(row, { color: "cyan" })
