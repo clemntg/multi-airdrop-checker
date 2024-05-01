@@ -3,6 +3,7 @@ import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { availAirdropChecker } from "./checkers/avail.js"
 import { availStarknetAirdropChecker } from "./checkers/avail_starknet.js"
+import { driftAirdropChecker } from "./checkers/drift.js"
 import { dymensionAirdropChecker } from "./checkers/dymension.js"
 import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { etherfiAirdropChecker } from "./checkers/etherfi.js"
@@ -29,6 +30,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "drift":
+            driftAirdropChecker()
+            break
         case "eigenlayer":
             eigenlayerAirdropChecker()
             break

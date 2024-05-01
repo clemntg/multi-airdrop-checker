@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Drift (solana.txt)",
+                    value: "drift",
+                },
+                {
                     name: "Eigenlayer (evm.txt)",
                     value: "eigenlayer",
                 },
