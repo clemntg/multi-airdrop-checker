@@ -16,6 +16,7 @@ import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { polyhedraAirdropChecker } from "./checkers/polyhedra.js"
 import { qnaAirdropChecker } from "./checkers/qna3.js"
 import { rabbypointsChecker } from "./checkers/rabby.js"
+import { spectralAirdropChecker } from "./checkers/spectral.js"
 import { wefAirdropChecker } from "./checkers/wef.js"
 import { wormholeAirdropChecker } from "./checkers/wormhole.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
@@ -30,6 +31,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "spectral":
+            spectralAirdropChecker()
+            break
         case "drift":
             driftAirdropChecker()
             break

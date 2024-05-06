@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Spectral (evm.txt)",
+                    value: "spectral",
+                },
+                {
                     name: "Drift (solana.txt)",
                     value: "drift",
                 },
