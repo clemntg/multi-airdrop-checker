@@ -9,6 +9,7 @@ import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { holographAirdropChecker } from "./checkers/holograph.js"
+import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { lineaParkAirdropChecker } from "./checkers/linea-park.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
@@ -32,6 +33,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "ionet":
+            ionetAirdropChecker()
+            break
         case "hologhraph":
             holographAirdropChecker()
             break
