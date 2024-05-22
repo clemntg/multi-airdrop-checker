@@ -1,4 +1,5 @@
 import {
+    generateRandomUserAgent,
     getKeyByValue,
     readWallets
 } from '../utils/common.js'
@@ -21,7 +22,7 @@ let headers = [
     { id: 'airdrop', title: 'airdrop'},
 ]
 
-let debug = false
+let debug = true
 let p
 let csvWriter
 let wallets = readWallets('./addresses/evm.txt')
@@ -35,7 +36,10 @@ const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_cla
 
 async function checkAirdrop(wallet, proxy = null) {
     let config = {
-        timeout: 25000
+        timeout: 25000,
+        "headers": {
+            "User-Agent": generateRandomUserAgent(),
+        },
     }
 
     if (proxy) {
@@ -54,7 +58,7 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://trailblazer.hekla.taiko.xyz/api/address?address=${wallet.toLowerCase()}`, config).then(async response => {
+        await axios.get(`https://trailblazer.hekla.taiko.xyz/api/address?address=${wallet}`, config).then(async response => {
             stats[wallet].airdrop = response.data.value ? parseInt(response.data.value) : 0
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true

@@ -55,7 +55,7 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://eligibility.holograph.foundation/api/eligibility/${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = response.data.amount ? parseFloat(response.data.amount, 0) : 0
+            stats[wallet].airdrop = response.data.amount ? parseInt(response.data.amount) : 0
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
