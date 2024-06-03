@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Kresko (evm.txt)",
+                    value: "kresko",
+                },
+                {
                     name: "Taiko (evm.txt)",
                     value: "taiko",
                 },

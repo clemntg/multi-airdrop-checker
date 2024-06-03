@@ -10,6 +10,7 @@ import { etherfiAirdropChecker } from "./checkers/etherfi.js"
 import { frameAirdropChecker } from "./checkers/frame.js"
 import { holographAirdropChecker } from "./checkers/holograph.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
+import { kreskoAirdropChecker } from "./checkers/kresko.js"
 import { lineaParkAirdropChecker } from "./checkers/linea-park.js"
 import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
@@ -34,6 +35,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "kresko":
+            kreskoAirdropChecker()
+            break
         case "taiko":
             taikoAirdropChecker()
             break
