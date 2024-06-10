@@ -54,9 +54,9 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://airdrop.io.solutions/v1/address/${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = response.data.result ? 'Yes' : 'No'
-            // totalAirdrop += parseInt(stats[wallet].airdrop)
+        await axios.get(`https://api.streamflow.finance/v2/api/airdrops/6Zv2VRjEvjZXSRb6phxnSJkPPiVsF3vg19LCfrhNd8hn/claimants/${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = (parseInt(response.data.amountUnlocked) + parseInt(response.data.amountLocked)) / 1e8
+            totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
             if (debug) console.log('balances', e.toString())
@@ -104,7 +104,7 @@ async function fetchWallets() {
     iterations = wallets.length
     iteration = 1
     csvData = []
-    
+
     let batchSize = 1
     let timeout = 1000
 
@@ -170,7 +170,7 @@ async function addTotalRow() {
 export async function ionetAirdropChecker() {
     progressBar.start(iterations, 0)
     await fetchWallets()
-    // await addTotalRow()
+    await addTotalRow()
     await saveToCsv()
     progressBar.stop()
     p.printTable()
