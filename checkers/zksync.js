@@ -1,13 +1,15 @@
 import {
     getKeyByValue,
-    readWallets
+    readWallets,
+    sleep
 } from '../utils/common.js'
-import axios from "axios"
 import { Table } from 'console-table-printer'
 import { createObjectCsvWriter } from 'csv-writer'
 import cliProgress from 'cli-progress'
-import { HttpsProxyAgent } from "https-proxy-agent"
-import { SocksProxyAgent } from "socks-proxy-agent"
+import path from 'path'
+import fs from 'fs'
+import Papa from "papaparse"
+
 
 let columns = [
     { name: 'n', color: 'green', alignment: "right" },
@@ -31,76 +33,29 @@ let iteration = 1
 let stats = []
 let csvData = []
 let totalAirdrop = 0
+let data = []
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
 
-async function checkAirdrop(wallet, proxy = null) {
-    let config = {
-        timeout: 15000,
-        "headers": {
-            "accept": "*/*",
-            "accept-language": "en-US,en;q=0.9,ru;q=0.8,bg;q=0.7",
-            "content-type": "application/json",
-            "priority": "u=1, i",
-            "sec-ch-ua": "\"Google Chrome\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "x-api-key": "46001d8f026d4a5bb85b33530120cd38"
-        },
-    }
+const csvFile = fs.readFileSync('./data/zksync.csv', 'utf8')
 
-    if (proxy) {
-        if (proxy.includes('http')) {
-            config.httpsAgent = new HttpsProxyAgent(proxy)
-        }
-
-        if (proxy.includes('socks')) {
-            config.httpsAgent = new SocksProxyAgent(proxy)
-        }
-    }
-
-    let isFetched = false
-    let retries = 0
-
-    stats[wallet].airdrop = 0
-
-    while (!isFetched) {
-        await axios.get(`https://api.zknation.io/eligibility?id=${wallet}`, config).then(async response => {
-            if (response.data.allocations.length) {
-                stats[wallet].airdrop = parseInt(response.data.allocations[0].tokenAmount) / 1e18
-            }
-            totalAirdrop += parseInt(stats[wallet].airdrop)
-            isFetched = true
-        }).catch(e => {
-            if (debug) console.log('balances', e.toString())
-
-            retries++
-
-            if (retries >= 3) {
-                isFetched = true
+Papa.parse(csvFile, {
+    header: true,
+    complete: function(results) {
+        results.data.forEach(row => {
+            if (row.userId && row.tokenAmount) {
+                data[row.userId] = parseFloat(row.tokenAmount)
             }
         })
     }
-}
+})
 
 async function fetchWallet(wallet, index) {
-
-    let proxy = null
-    if (proxies.length) {
-        if (proxies[index]) {
-            proxy = proxies[index]
-        } else {
-            proxy = proxies[0]
-        }
-    }
-
+    wallet = wallet.toLowerCase()
     stats[wallet] = {
-        airdrop: 0
+        airdrop: data[wallet] ? parseInt(data[wallet]) : 0
     }
 
-    await checkAirdrop(wallet, proxy)
+    totalAirdrop += parseInt(stats[wallet].airdrop)
 
     progressBar.update(iteration)
 
@@ -120,13 +75,8 @@ async function fetchWallets() {
     iteration = 1
     csvData = []
 
-    let batchSize = 1
-    let timeout = 1000
-
-    if (proxies.length) {
-        batchSize = 10
-        timeout = 1000
-    }
+    let batchSize = 1000
+    let timeout = 1
 
     const batchCount = Math.ceil(wallets.length / batchSize)
     const walletPromises = []
@@ -156,6 +106,8 @@ async function fetchWallets() {
     }
 
     await Promise.all(walletPromises)
+
+
     return true
 }
 
@@ -181,6 +133,7 @@ async function addTotalRow() {
 
     p.addRow(row, { color: "cyan" })
 }
+
 
 export async function zksyncAirdropChecker() {
     progressBar.start(iterations, 0)
