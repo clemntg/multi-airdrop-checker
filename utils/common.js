@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Zksync (evm.txt)",
+                    value: "zksync",
+                },
+                {
                     name: "Ionet (solana.txt)",
                     value: "ionet",
                 },

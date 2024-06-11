@@ -24,6 +24,7 @@ import { taikoAirdropChecker } from "./checkers/taiko.js"
 import { wefAirdropChecker } from "./checkers/wef.js"
 import { wormholeAirdropChecker } from "./checkers/wormhole.js"
 import { zetachainAirdropChecker } from "./checkers/zetachain.js"
+import { zksyncAirdropChecker } from "./checkers/zksync.js"
 import { entryPoint } from "./utils/common.js"
 
 async function startMenu(menu) {
@@ -35,6 +36,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "zksync":
+            zksyncAirdropChecker()
+            break
         case "kresko":
             kreskoAirdropChecker()
             break
