@@ -1,4 +1,6 @@
+import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aevoAirdropChecker } from "./checkers/aevo.js"
+import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
 import { altlayerAirdropChecker } from "./checkers/altlayer.js"
 import { anomaAirdropChecker } from "./checkers/anoma.js"
 import { availAirdropChecker } from "./checkers/avail.js"
@@ -36,6 +38,12 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "aiarena":
+            aiarenaAirdropChecker()
+            break
+        case "aethir":
+            aethirAirdropChecker()
+            break
         case "zksync":
             zksyncAirdropChecker()
             break

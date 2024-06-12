@@ -171,6 +171,14 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "AiArena (evm.txt)",
+                    value: "aiarena",
+                },
+                {
+                    name: "Aethir (evm.txt)",
+                    value: "aethir",
+                },
+                {
                     name: "Zksync (evm.txt)",
                     value: "zksync",
                 },
