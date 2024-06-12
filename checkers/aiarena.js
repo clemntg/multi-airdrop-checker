@@ -68,7 +68,8 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://airdrop-backend-f4dfd0e04c30.herokuapp.com/claim/claim-data?address=${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = response.data.amount ? parseInt(response.data.amount) : 0
+            let amount = response.data.amount ? parseInt(response.data.amount) : 0
+            stats[wallet].airdrop = parseInt((amount > 1000000 ? amount / 1e18 : amount))
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
