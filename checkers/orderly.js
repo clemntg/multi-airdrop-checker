@@ -10,18 +10,18 @@ import { HttpsProxyAgent } from "https-proxy-agent"
 import { SocksProxyAgent } from "socks-proxy-agent"
 
 let columns = [
-    { name: 'n', color: 'green', alignment: "right" },
-    { name: 'wallet', color: 'green', alignment: "right" },
-    { name: 'airdrop', color: 'green', alignment: "right" },
+    { name: 'n', color: 'green', alignment: "right"},
+    { name: 'wallet', color: 'green', alignment: "right"},
+    { name: 'airdrop', color: 'green', alignment: "right"},
 ]
 
 let headers = [
-    { id: 'n', title: '№' },
-    { id: 'wallet', title: 'wallet' },
-    { id: 'airdrop', title: 'airdrop' },
+    { id: 'n', title: '№'},
+    { id: 'wallet', title: 'wallet'},
+    { id: 'airdrop', title: 'airdrop'},
 ]
 
-let debug = true
+let debug = false
 let p
 let csvWriter
 let wallets = readWallets('./addresses/evm.txt')
@@ -35,20 +35,7 @@ const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_cla
 
 async function checkAirdrop(wallet, proxy = null) {
     let config = {
-        timeout: 15000,
-        "headers": {
-            "accept": "application/json, text/plain, */*",
-            "accept-language": "en-US,en;q=0.9,ru;q=0.8,bg;q=0.7",
-            "priority": "u=1, i",
-            "sec-ch-ua": "\"Google Chrome\";v=\"125\", \"Chromium\";v=\"125\", \"Not.A/Brand\";v=\"24\"",
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": "\"Windows\"",
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.4664.45 Safari/537.36",
-            "Cookie": ""
-        }
+        timeout: 5000
     }
 
     if (proxy) {
@@ -67,13 +54,12 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://airdrop-backend-f4dfd0e04c30.herokuapp.com/claim/claim-data?address=${wallet}`, config).then(async response => {
-            let amount = response.data.amount ? parseInt(response.data.amount) : 0
-            stats[wallet].airdrop = parseInt((amount > 1000000 ? amount / 1e18 : amount))
+        await axios.get(`https://api-evm.orderly.org/v1/client/airdrop_evm?evm_address=${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = parseFloat(response.data.data.airdrop_earlyevm) + parseFloat(response.data.data.airdrop_galxe_user) + parseFloat(response.data.data.airdrop_merits) + parseFloat(response.data.data.airdrop_nearperps) + parseFloat(response.data.data.airdrop_nearspot) + parseFloat(response.data.data.airdrop_zealy_user)
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
-            if (debug) console.log('balances', e)
+            if (debug) console.log('balances', e.toString())
 
             retries++
 
@@ -104,7 +90,7 @@ async function fetchWallet(wallet, index) {
     progressBar.update(iteration)
 
     let row = {
-        n: parseInt(index) + 1,
+        n: parseInt(index)+1,
         wallet: wallet,
         airdrop: stats[wallet].airdrop,
     }
@@ -118,7 +104,7 @@ async function fetchWallets() {
     iterations = wallets.length
     iteration = 1
     csvData = []
-
+    
     let batchSize = 1
     let timeout = 1000
 
@@ -136,7 +122,7 @@ async function fetchWallets() {
     })
 
     csvWriter = createObjectCsvWriter({
-        path: './results/aiarena.csv',
+        path: './results/orderly.csv',
         header: headers
     })
 
@@ -181,7 +167,7 @@ async function addTotalRow() {
     p.addRow(row, { color: "cyan" })
 }
 
-export async function aiarenaAirdropChecker() {
+export async function orderlyAirdropChecker() {
     progressBar.start(iterations, 0)
     await fetchWallets()
     await addTotalRow()

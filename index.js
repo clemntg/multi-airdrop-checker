@@ -18,6 +18,7 @@ import { mantaAirdropChecker } from "./checkers/manta.js"
 import { memeAirdropChecker } from "./checkers/meme.js"
 import { metamaskAirdropChecker } from "./checkers/metamask.js"
 import { optimismAirdropChecker } from "./checkers/optimism.js"
+import { orderlyAirdropChecker } from "./checkers/orderly.js"
 import { polyhedraAirdropChecker } from "./checkers/polyhedra.js"
 import { qnaAirdropChecker } from "./checkers/qna3.js"
 import { rabbypointsChecker } from "./checkers/rabby.js"
@@ -38,6 +39,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "orderly":
+            orderlyAirdropChecker()
+            break
         case "aiarena":
             aiarenaAirdropChecker()
             break
