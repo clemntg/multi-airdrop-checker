@@ -2,9 +2,9 @@ import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
 import { availAirdropChecker } from "./checkers/avail.js"
 import { availStarknetAirdropChecker } from "./checkers/avail_starknet.js"
-import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
+import { layerzeroAirdropChecker } from "./checkers/layerzero.js"
 import { orderlyAirdropChecker } from "./checkers/orderly.js"
 import { spectralAirdropChecker } from "./checkers/spectral.js"
 import { taikoAirdropChecker } from "./checkers/taiko.js"
@@ -20,6 +20,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "layerzero":
+            layerzeroAirdropChecker()
+            break
         case "orderly":
             orderlyAirdropChecker()
             break

@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Layerzero (evm.txt)",
+                    value: "layerzero",
+                },
+                {
                     name: "Orderly (evm.txt)",
                     value: "orderly",
                 },
