@@ -199,24 +199,12 @@ export const entryPoint = async () => {
                     value: "taiko",
                 },
                 {
-                    name: "Hologhraph (evm.txt)",
-                    value: "hologhraph",
-                },
-                {
                     name: "Spectral (evm.txt)",
                     value: "spectral",
                 },
                 {
-                    name: "Drift (solana.txt)",
-                    value: "drift",
-                },
-                {
                     name: "Eigenlayer (evm.txt)",
                     value: "eigenlayer",
-                },
-                {
-                    name: "Wef (evm.txt)",
-                    value: "wef",
                 },
                 {
                     name: "Avail (private_keys.txt)",
@@ -226,38 +214,6 @@ export const entryPoint = async () => {
                     name: "Avail starknet (starknet_keys.txt, starknet_addresses.txt)",
                     value: "avail_starknet",
                 },
-                {
-                    name: "Metamask (evm.txt)",
-                    value: "metamask",
-                },
-                {
-                    name: "LineaPark (evm.txt)",
-                    value: "linea-park",
-                },
-                {
-                    name: "Polyhedra (polyhedra.txt)",
-                    value: "polyhedra",
-                },
-                {
-                    name: "Aevo (aevo.txt)",
-                    value: "aevo",
-                },
-                {
-                    name: "Ether.fi (etherfi.txt)",
-                    value: "etherfi",
-                },
-                {
-                    name: "Meme (private_keys.txt)",
-                    value: "meme",
-                },
-                {
-                    name: "Wormhole (wormhole.txt)",
-                    value: "wormhole",
-                },
-                {
-                    name: "Optimism (optimism.txt)",
-                    value: "optimism",
-                }
             ],
             loop: false,
         },

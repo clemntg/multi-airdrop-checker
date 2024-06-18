@@ -1,5 +1,5 @@
 {
-  "name": "wallet-checker",
+  "name": "airdrop-checker",
   "version": "1.0.0",
   "scripts": {
     "start": "node --max-old-space-size=8192 index.js"
