@@ -109,8 +109,8 @@ async function fetchWallets() {
     let timeout = 1000
 
     if (proxies.length) {
-        batchSize = 10
-        timeout = 1000
+        batchSize = 3
+        timeout = 5000
     }
 
     const batchCount = Math.ceil(wallets.length / batchSize)
