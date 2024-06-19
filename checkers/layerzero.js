@@ -21,7 +21,7 @@ let headers = [
     { id: 'airdrop', title: 'airdrop'},
 ]
 
-let debug = false
+let debug = true
 let p
 let csvWriter
 let wallets = readWallets('./addresses/evm.txt')
@@ -54,8 +54,8 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = parseFloat(response.data.data.pipelines.tokenQualified, 0)
+        await axios.get(`https://www.layerzero.foundation/api/allocation/${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = parseFloat(response.data.zroAllocation.asString, 0)
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {

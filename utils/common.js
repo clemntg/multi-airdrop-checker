@@ -213,11 +213,7 @@ export const entryPoint = async () => {
                 {
                     name: "Avail (private_keys.txt)",
                     value: "avail",
-                },
-                {
-                    name: "Avail starknet (starknet_keys.txt, starknet_addresses.txt)",
-                    value: "avail_starknet",
-                },
+                }
             ],
             loop: false,
         },

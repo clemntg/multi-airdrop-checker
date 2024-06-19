@@ -1,7 +1,5 @@
 import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
-import { availAirdropChecker } from "./checkers/avail.js"
-import { availStarknetAirdropChecker } from "./checkers/avail_starknet.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
 import { layerzeroAirdropChecker } from "./checkers/layerzero.js"
@@ -46,12 +44,6 @@ async function startMenu(menu) {
             break
         case "spectral":
             spectralAirdropChecker()
-            break
-        case "avail":
-            availAirdropChecker()
-            break
-        case "avail_starknet":
-            availStarknetAirdropChecker()
             break
     }
 }
