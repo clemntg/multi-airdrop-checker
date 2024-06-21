@@ -8,17 +8,21 @@ import { createObjectCsvWriter } from 'csv-writer'
 import cliProgress from 'cli-progress'
 import { HttpsProxyAgent } from "https-proxy-agent"
 import { SocksProxyAgent } from "socks-proxy-agent"
+import { arbitrum } from 'viem/chains'
+import { createPublicClient, http } from 'viem'
 
 let columns = [
-    { name: 'n', color: 'green', alignment: "right"},
-    { name: 'wallet', color: 'green', alignment: "right"},
-    { name: 'airdrop', color: 'green', alignment: "right"},
+    { name: 'n', color: 'green', alignment: "right" },
+    { name: 'wallet', color: 'green', alignment: "right" },
+    { name: 'airdrop', color: 'green', alignment: "right" },
+    { name: 'claimed', color: 'green', alignment: "right" },
 ]
 
 let headers = [
-    { id: 'n', title: '№'},
-    { id: 'wallet', title: 'wallet'},
-    { id: 'airdrop', title: 'airdrop'},
+    { id: 'n', title: '№' },
+    { id: 'wallet', title: 'wallet' },
+    { id: 'airdrop', title: 'airdrop' },
+    { id: 'claimed', title: 'claimed' },
 ]
 
 let debug = true
@@ -32,6 +36,21 @@ let stats = []
 let csvData = []
 let totalAirdrop = 0
 const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
+
+const ZRO_ABI = [
+    {
+        inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+        name: 'zroClaimed',
+        outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+    },
+]
+
+const client = createPublicClient({
+    chain: arbitrum,
+    transport: http()
+})
 
 async function checkAirdrop(wallet, proxy = null) {
     let config = {
@@ -54,6 +73,15 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
+        const claimed = await client.readContract({
+            address: '0xd6b6a6701303B5Ea36fa0eDf7389b562d8F894DB',
+            abi: ZRO_ABI,
+            functionName: 'zroClaimed',
+            args: [wallet],
+        })
+
+        stats[wallet].claimed = claimed > 0 ? true : false
+
         await axios.get(`https://www.layerzero.foundation/api/allocation/${wallet}`, config).then(async response => {
             stats[wallet].airdrop = parseFloat(response.data.zroAllocation.asString, 0)
             totalAirdrop += parseInt(stats[wallet].airdrop)
@@ -82,7 +110,8 @@ async function fetchWallet(wallet, index) {
     }
 
     stats[wallet] = {
-        airdrop: 0
+        airdrop: 0,
+        claimed: false
     }
 
     await checkAirdrop(wallet, proxy)
@@ -90,9 +119,10 @@ async function fetchWallet(wallet, index) {
     progressBar.update(iteration)
 
     let row = {
-        n: parseInt(index)+1,
+        n: parseInt(index) + 1,
         wallet: wallet,
         airdrop: stats[wallet].airdrop,
+        claimed: stats[wallet].claimed,
     }
 
     p.addRow(row, { color: "cyan" })
@@ -104,7 +134,7 @@ async function fetchWallets() {
     iterations = wallets.length
     iteration = 1
     csvData = []
-    
+
     let batchSize = 1
     let timeout = 1000
 
