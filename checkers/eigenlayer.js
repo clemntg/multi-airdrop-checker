@@ -1,4 +1,5 @@
 import {
+    generateRandomUserAgent,
     getKeyByValue,
     readWallets
 } from '../utils/common.js'
@@ -35,7 +36,10 @@ const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_cla
 
 async function checkAirdrop(wallet, proxy = null) {
     let config = {
-        timeout: 5000
+        timeout: 5000,
+        "headers": {
+            "User-Agent": generateRandomUserAgent(),
+        },
     }
 
     if (proxy) {
@@ -55,7 +59,7 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://claims.eigenfoundation.org/clique-eigenlayer-api/campaign/eigenlayer/credentials?walletAddress=${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = parseFloat(response.data.data.pipelines.tokenQualified, 0)
+            stats[wallet].airdrop = (parseFloat(response.data.phase1.data.pipelines.tokenQualified) + parseFloat(response.data.phase2.data.pipelines.tokenQualified)).toFixed(2)
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
