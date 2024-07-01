@@ -73,14 +73,16 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        const claimed = await client.readContract({
-            address: '0xd6b6a6701303B5Ea36fa0eDf7389b562d8F894DB',
-            abi: ZRO_ABI,
-            functionName: 'zroClaimed',
-            args: [wallet],
-        })
+        if (wallet.length === 42) {
+            const claimed = await client.readContract({
+                address: '0xd6b6a6701303B5Ea36fa0eDf7389b562d8F894DB',
+                abi: ZRO_ABI,
+                functionName: 'zroClaimed',
+                args: [wallet],
+            })
 
-        stats[wallet].claimed = claimed > 0 ? true : false
+            stats[wallet].claimed = claimed > 0 ? true : false
+        }
 
         await axios.get(`https://www.layerzero.foundation/api/allocation/${wallet}`, config).then(async response => {
             stats[wallet].airdrop = parseFloat(response.data.zroAllocation.asString, 0)
