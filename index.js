@@ -1,6 +1,5 @@
 import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
-import { blastAirdropChecker } from "./checkers/blast.js"
 import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
@@ -22,9 +21,6 @@ async function startMenu(menu) {
     switch (mode) {
         case "eigenlayer":
             eigenlayerAirdropChecker()
-            break
-        case "blast":
-            blastAirdropChecker()
             break
         case "layerzero":
             layerzeroAirdropChecker()
