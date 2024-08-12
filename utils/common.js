@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Debridge (evm.txt)",
+                    value: "debridge",
+                },
+                {
                     name: "Layerzero (evm.txt)",
                     value: "layerzero",
                 },
