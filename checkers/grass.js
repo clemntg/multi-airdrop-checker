@@ -13,12 +13,14 @@ let columns = [
     { name: 'n', color: 'green', alignment: "right"},
     { name: 'wallet', color: 'green', alignment: "right"},
     { name: 'airdrop', color: 'green', alignment: "right"},
+    { name: 'sybil', color: 'green', alignment: "right"},
 ]
 
 let headers = [
     { id: 'n', title: '№'},
     { id: 'wallet', title: 'wallet'},
     { id: 'airdrop', title: 'airdrop'},
+    { id: 'sybil', title: 'sybil'},
 ]
 
 let debug = false
@@ -55,9 +57,12 @@ async function checkAirdrop(wallet, proxy = null) {
 
     while (!isFetched) {
         await axios.get(`https://api.getgrass.io/airdropAllocations?input={"walletAddress":"${wallet}"}`, config).then(async response => {
+            const keys = Object.keys(response.data.result.data)
             const values = Object.values(response.data.result.data)
             const totalSum = values.reduce((acc, value) => acc + value, 0)
+            const hasSybil = keys.some(key => key.includes('sybil'))
             stats[wallet].airdrop = totalSum.toFixed(2)
+            stats[wallet].sybil = hasSybil ? 'Yes' : 'No'
 
             totalAirdrop += parseFloat(stats[wallet].airdrop)
             isFetched = true
@@ -85,7 +90,8 @@ async function fetchWallet(wallet, index) {
     }
 
     stats[wallet] = {
-        airdrop: 0
+        airdrop: 0,
+        sybil: 'No'
     }
 
     await checkAirdrop(wallet, proxy)
@@ -96,6 +102,7 @@ async function fetchWallet(wallet, index) {
         n: parseInt(index)+1,
         wallet: wallet,
         airdrop: stats[wallet].airdrop,
+        sybil: stats[wallet].sybil,
     }
 
     p.addRow(row, { color: "cyan" })
