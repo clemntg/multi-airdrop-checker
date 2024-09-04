@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Grass (solana.txt)",
+                    value: "grass",
+                },
+                {
                     name: "Debridge (evm.txt)",
                     value: "debridge",
                 },
