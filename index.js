@@ -2,6 +2,7 @@ import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
 import { debridgeAirdropChecker } from "./checkers/debridge.js"
 import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
+import { energyAirdropChecker } from "./checkers/energy.js"
 import { grassAirdropChecker } from "./checkers/grass.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
@@ -21,6 +22,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "energy":
+            energyAirdropChecker()
+            break
         case "grass":
             grassAirdropChecker()
             break
