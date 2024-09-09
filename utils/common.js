@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Scroll pump (evm.txt)",
+                    value: "scroll-pump",
+                },
+                {
                     name: "Energy (evm.txt)",
                     value: "energy",
                 },

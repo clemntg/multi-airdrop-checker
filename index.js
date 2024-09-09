@@ -8,6 +8,7 @@ import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
 import { layerzeroAirdropChecker } from "./checkers/layerzero.js"
 import { orderlyAirdropChecker } from "./checkers/orderly.js"
+import { scrollPumpAirdropChecker } from "./checkers/scroll-pump.js"
 import { spectralAirdropChecker } from "./checkers/spectral.js"
 import { taikoAirdropChecker } from "./checkers/taiko.js"
 import { zksyncAirdropChecker } from "./checkers/zksync.js"
@@ -22,6 +23,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "scroll-pump":
+            scrollPumpAirdropChecker()
+            break
         case "energy":
             energyAirdropChecker()
             break
