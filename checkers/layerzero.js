@@ -81,11 +81,12 @@ async function checkAirdrop(wallet, proxy = null) {
                 args: [wallet],
             })
 
-            stats[wallet].claimed = claimed > 0 ? true : false
+            // stats[wallet].claimed = claimed > 0 ? true : false
+            stats[wallet].claimed = '?'
         }
 
-        await axios.get(`https://www.layerzero.foundation/api/allocation/${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = parseFloat(response.data.zroAllocation.asString, 0)
+        await axios.get(`https://layerzero.foundation/api/proof/${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = (parseInt(response.data.round2) / 1e18).toFixed(2)
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
