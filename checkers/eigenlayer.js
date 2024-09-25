@@ -14,15 +14,31 @@ let columns = [
     { name: 'n', color: 'green', alignment: "right"},
     { name: 'wallet', color: 'green', alignment: "right"},
     { name: 'airdrop', color: 'green', alignment: "right"},
+    { name: 'etherfi', color: 'green', alignment: "right"},
+    { name: 'eigen', color: 'green', alignment: "right"},
+    { name: 'swell', color: 'green', alignment: "right"},
+    { name: 'renzo', color: 'green', alignment: "right"},
+    // { name: 'stakestone', color: 'green', alignment: "right"},
+    // { name: 'kelpdao', color: 'green', alignment: "right"},
+    // { name: 'eigenpie', color: 'green', alignment: "right"},
+    // { name: 'puffer', color: 'green', alignment: "right"},
 ]
 
 let headers = [
     { id: 'n', title: '№'},
     { id: 'wallet', title: 'wallet'},
     { id: 'airdrop', title: 'airdrop'},
+    { id: 'etherfi', title: 'etherfi'},
+    { id: 'eigen', title: 'eigen'},
+    { id: 'swell', title: 'swell'},
+    { id: 'renzo', title: 'renzo'},
+    // { id: 'stakestone', title: 'stakestone'},
+    // { id: 'kelpdao', title: 'kelpdao'},
+    // { id: 'eigenpie', title: 'eigenpie'},
+    // { id: 'puffer', title: 'puffer'},
 ]
 
-let debug = false
+let debug = true
 let p
 let csvWriter
 let wallets = readWallets('./addresses/evm.txt')
@@ -36,7 +52,7 @@ const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_cla
 
 async function checkAirdrop(wallet, proxy = null) {
     let config = {
-        timeout: 5000,
+        timeout: 35000,
         "headers": {
             "User-Agent": generateRandomUserAgent(),
         },
@@ -58,9 +74,16 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://claims.eigenfoundation.org/clique-eigenlayer-api/campaign/eigenlayer/credentials?walletAddress=${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = (parseFloat(response.data.phase1.data.pipelines.tokenQualified) + parseFloat(response.data.phase2.data.pipelines.tokenQualified)).toFixed(2)
-            totalAirdrop += parseInt(stats[wallet].airdrop)
+        await axios.get(`https://checkeigen.vercel.app/api/getAmount?address=${wallet}`, config).then(async response => {
+            stats[wallet].etherfi = response.data.etherfi > 0 ? parseFloat(response.data.etherfi).toFixed(2) : 0
+            stats[wallet].eigen = response.data.eigenpie > 0 ? parseFloat(response.data.eigenpie).toFixed(2) : 0
+            stats[wallet].swell = response.data.swell > 0 ? parseFloat(response.data.swell).toFixed(2) : 0
+            stats[wallet].renzo = response.data.renzo > 0 ? parseFloat(response.data.renzo).toFixed(2) : 0
+            // stats[wallet].kelpdao = parseFloat(response.data.)
+            // stats[wallet].eigenpie = parseFloat(response.data.)
+            // stats[wallet].puffer = parseFloat(response.data.)
+            stats[wallet].airdrop = parseFloat(stats[wallet].etherfi) + parseFloat(stats[wallet].eigen) + parseFloat(stats[wallet].swell) + parseFloat(stats[wallet].renzo)
+            totalAirdrop += parseFloat(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
             if (debug) console.log('balances', e.toString())
@@ -97,6 +120,10 @@ async function fetchWallet(wallet, index) {
         n: parseInt(index)+1,
         wallet: wallet,
         airdrop: stats[wallet].airdrop,
+        etherfi: stats[wallet].etherfi,
+        eigen: stats[wallet].eigen,
+        swell: stats[wallet].swell,
+        renzo: stats[wallet].renzo,
     }
 
     p.addRow(row, { color: "cyan" })
@@ -165,7 +192,7 @@ async function addTotalRow() {
 
     let row = {
         wallet: 'Total',
-        airdrop: totalAirdrop
+        airdrop: totalAirdrop.toFixed(2)
     }
 
     p.addRow(row, { color: "cyan" })
