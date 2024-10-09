@@ -7,6 +7,7 @@ import { grassAirdropChecker } from "./checkers/grass.js"
 import { ionetAirdropChecker } from "./checkers/ionet.js"
 import { kreskoAirdropChecker } from "./checkers/kresko.js"
 import { layerzeroAirdropChecker } from "./checkers/layerzero.js"
+import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { orderlyAirdropChecker } from "./checkers/orderly.js"
 import { scrollPumpAirdropChecker } from "./checkers/scroll-pump.js"
 import { spectralAirdropChecker } from "./checkers/spectral.js"
@@ -23,6 +24,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "optimism":
+            optimismAirdropChecker()
+            break
         case "scroll-pump":
             scrollPumpAirdropChecker()
             break
