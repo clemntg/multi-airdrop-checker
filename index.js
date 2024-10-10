@@ -1,5 +1,6 @@
 import { aethirAirdropChecker } from "./checkers/aethir.js"
 import { aiarenaAirdropChecker } from "./checkers/aiarena.js"
+import { carvAirdropChecker } from "./checkers/carv.js"
 import { debridgeAirdropChecker } from "./checkers/debridge.js"
 import { eigenlayerAirdropChecker } from "./checkers/eigenlayer.js"
 import { energyAirdropChecker } from "./checkers/energy.js"
@@ -24,6 +25,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "carv":
+            carvAirdropChecker()
+            break
         case "optimism":
             optimismAirdropChecker()
             break

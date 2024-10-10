@@ -171,6 +171,10 @@ export const entryPoint = async () => {
             message: "Действие:",
             choices: [
                 {
+                    name: "Carv (private_keys.txt)",
+                    value: "carv",
+                },
+                {
                     name: "Optimism (evm.txt)",
                     value: "optimism",
                 },
