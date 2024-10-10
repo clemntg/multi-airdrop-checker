@@ -57,7 +57,7 @@ function getClient(token = null, proxy) {
             "Referer": "https://airdrop.carv.io/",
             "Referrer-Policy": "strict-origin-when-cross-origin"
         },
-        // ...(proxy ? { proxyUrl: proxy } : {}),
+        ...(proxy ? { proxyUrl: proxy } : {}),
         retry: {
             limit: 3,
             methods: ['GET', 'POST'],
