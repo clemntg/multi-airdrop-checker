@@ -22,7 +22,7 @@ let headers = [
     { id: 'airdrop', title: 'airdrop'},
 ]
 
-let debug = false
+let debug = true
 let p
 let csvWriter
 let wallets = readWallets('./addresses/evm.txt')
@@ -58,8 +58,8 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://trailblazer.hekla.taiko.xyz/api/address?address=${wallet}`, config).then(async response => {
-            stats[wallet].airdrop = response.data.value ? parseInt(response.data.value) : 0
+        await axios.get(`https://trailblazer.mainnet.taiko.xyz/claim/proof?address=${wallet}`, config).then(async response => {
+            stats[wallet].airdrop = parseFloat(response.data.value) > 0 ? parseFloat(response.data.value) : 0
             totalAirdrop += parseInt(stats[wallet].airdrop)
             isFetched = true
         }).catch(e => {
@@ -86,7 +86,7 @@ async function fetchWallet(wallet, index) {
     }
 
     stats[wallet] = {
-        airdrop: 0
+        airdrop: false
     }
 
     await checkAirdrop(wallet, proxy)
@@ -113,7 +113,7 @@ async function fetchWallets() {
     let timeout = 1000
 
     if (proxies.length) {
-        batchSize = 50
+        batchSize = 10
         timeout = 1000
     }
 
