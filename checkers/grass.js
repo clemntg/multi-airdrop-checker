@@ -56,7 +56,7 @@ async function checkAirdrop(wallet, proxy = null) {
     stats[wallet].airdrop = 0
 
     while (!isFetched) {
-        await axios.get(`https://api.getgrass.io/airdropAllocations?input={"walletAddress":"${wallet}"}`, config).then(async response => {
+        await axios.get(`https://api.getgrass.io/zvTlZ8PRouKKGTGNzg4k?input={"walletAddress":"${wallet}"}`, config).then(async response => {
             const keys = Object.keys(response.data.result.data)
             const values = Object.values(response.data.result.data)
             const totalSum = values.reduce((acc, value) => acc + value, 0)
