@@ -11,6 +11,7 @@ import { layerzeroAirdropChecker } from "./checkers/layerzero.js"
 import { optimismAirdropChecker } from "./checkers/optimism.js"
 import { orderlyAirdropChecker } from "./checkers/orderly.js"
 import { scrollPumpAirdropChecker } from "./checkers/scroll-pump.js"
+import { scrollAirdropChecker } from "./checkers/scroll.js"
 import { spectralAirdropChecker } from "./checkers/spectral.js"
 import { taikoAirdropChecker } from "./checkers/taiko.js"
 import { zksyncAirdropChecker } from "./checkers/zksync.js"
@@ -25,6 +26,9 @@ async function startMenu(menu) {
     }
 
     switch (mode) {
+        case "scroll":
+            scrollAirdropChecker()
+            break
         case "carv":
             carvAirdropChecker()
             break
