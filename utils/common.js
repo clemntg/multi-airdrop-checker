@@ -1,4 +1,5 @@
 import fs from "fs"
+import path from 'path'
 import axios from "axios"
 import inquirer from "inquirer"
 import { HttpsProxyAgent } from "https-proxy-agent"
@@ -29,6 +30,13 @@ export function writeLineToFile(filePath, line) {
         fs.appendFileSync(filePath, line + '\n', 'utf-8')
     } catch (error) {
         console.error('Error appending to the file:', error.message)
+    }
+}
+
+export function ensureDirectoryExistence(filePath) {
+    const dir = path.dirname(filePath)
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true })
     }
 }
 
