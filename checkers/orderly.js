@@ -1,6 +1,7 @@
 import {
     getKeyByValue,
-    readWallets
+    readWallets,
+    ensureDirectoryExistence
 } from '../utils/common.js'
 import axios from "axios"
 import { Table } from 'console-table-printer'
@@ -121,8 +122,11 @@ async function fetchWallets() {
         sort: (row1, row2) => +row1.n - +row2.n
     })
 
+    const csvFilePath = './results/orderly.csv'
+    ensureDirectoryExistence(csvFilePath)
+
     csvWriter = createObjectCsvWriter({
-        path: './results/orderly.csv',
+        path: csvFilePath,
         header: headers
     })
 

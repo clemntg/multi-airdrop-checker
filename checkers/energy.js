@@ -1,7 +1,8 @@
 import {
     generateRandomUserAgent,
     getKeyByValue,
-    readWallets
+    readWallets,
+    ensureDirectoryExistence
 } from '../utils/common.js'
 import axios from "axios"
 import { Table } from 'console-table-printer'
@@ -9,6 +10,7 @@ import { createObjectCsvWriter } from 'csv-writer'
 import cliProgress from 'cli-progress'
 import { HttpsProxyAgent } from "https-proxy-agent"
 import { SocksProxyAgent } from "socks-proxy-agent"
+import "dotenv/config"
 
 let columns = [
     { name: 'n', color: 'green', alignment: "right"},
@@ -125,8 +127,11 @@ async function fetchWallets() {
         sort: (row1, row2) => +row1.n - +row2.n
     })
 
+    const csvFilePath = './results/energy.csv'
+    ensureDirectoryExistence(csvFilePath)
+
     csvWriter = createObjectCsvWriter({
-        path: './results/energy.csv',
+        path: csvFilePath,
         header: headers
     })
 

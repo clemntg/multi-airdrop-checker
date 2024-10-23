@@ -1,7 +1,8 @@
 import {
     getKeyByValue,
     readWallets,
-    sleep
+    sleep,
+    ensureDirectoryExistence
 } from '../utils/common.js'
 import { Table } from 'console-table-printer'
 import { createObjectCsvWriter } from 'csv-writer'
@@ -86,8 +87,11 @@ async function fetchWallets() {
         sort: (row1, row2) => +row1.n - +row2.n
     })
 
+    const csvFilePath = './results/zksync.csv'
+    ensureDirectoryExistence(csvFilePath)
+
     csvWriter = createObjectCsvWriter({
-        path: './results/zksync.csv',
+        path: csvFilePath,
         header: headers
     })
 
